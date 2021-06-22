@@ -1,6 +1,4 @@
-import React, {useState, useReducer, useEffect} from 'react';
-
-import logo from './logo.svg';
+import React, {useState, useReducer} from 'react';
 import './App.css';
 
 const ACTIONS = {
@@ -15,7 +13,7 @@ const todoReducer = (task, action) => {
   switch (action.type) {
     case ACTIONS.ADD_TASK:
       return [
-        ...initialState,
+        ...task,
         {
           task: action.payload.task,
           id: Date.now(),
@@ -33,10 +31,6 @@ const todoReducer = (task, action) => {
   }
 }
 
-// const newTodo = (name) => {
-//   return { id: Date.now(), name: name, complete: false}
-// }
-
 const countReducer = (counter, action) => {
   switch (action.type) {
     case ACTIONS.INCREMENT:
@@ -50,10 +44,10 @@ const countReducer = (counter, action) => {
 
 const initialState = [
   {
-  task: 'create multiple reducers',
-  id: Date.now(),
-  completed: false
-}
+    task: 'create multiple reducers',
+    id: 465498491255,
+    completed: false
+  },
 ]
 
 const initialCount = {
@@ -66,7 +60,7 @@ function App() {
 
   const [item, setItem] = useState('')
 
-  console.log(initialState)
+  console.log(task)
 
   const addTask = e => {
     e.preventDefault();
@@ -81,6 +75,28 @@ function App() {
 
   }
 
+  const toggleCompleted = clickedItemId => {
+    setDispatch({
+      type: ACTIONS.TOGGLE_COMPLETED,
+      payload: 
+        task.map(item => {
+          if (item.id === clickedItemId) {
+            return { ...item, completed: !item.completed}
+          } else {
+            return item
+          }
+        })
+    })
+  }
+
+  const clearCompleted = () => {
+    setDispatch({
+      type: ACTIONS.CLEAR_COMPLETED,
+      payload:
+        task.filter(item => item.completed !== true)
+    })
+  }
+
   const increment = () => {
     dispatch({ type: ACTIONS.INCREMENT })
   }
@@ -92,7 +108,6 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
         <form>
           <input type="text" className="todoInput" placeholder="add task" value={item} onChange={e => setItem (e.target.value)} />
           <button onClick={addTask}>submit</button>
@@ -100,8 +115,19 @@ function App() {
 
         <div>
           {task.map(item => (
-            <p key={item.id}>{item.task}</p>
+            <p
+              key={item.id} 
+              onClick={() => toggleCompleted(item.id)} 
+              className={`item${item.completed ? ' completed' : ''}`}
+              aria-label="select task" 
+            >
+              {item.task}
+            </p>
           ))}
+        </div>
+
+        <div>
+          <button onClick={clearCompleted}>erase completed</button>
         </div>
 
         <div>
