@@ -9,27 +9,7 @@ const ACTIONS = {
   CLEAR_COMPLETED: 'clear_completed'
 }
 
-const todoReducer = (task, action) => {
-  switch (action.type) {
-    case ACTIONS.ADD_TASK:
-      return [
-        ...task,
-        {
-          task: action.payload.task,
-          id: Date.now(),
-          completed: false
-        }
-      ]
-    case ACTIONS.TOGGLE_COMPLETED:
-      return action.payload
 
-    case ACTIONS.CLEAR_COMPLETED:
-      return action.payload
-    
-    default:
-      return task
-  }
-}
 
 const countReducer = (counter, action) => {
   switch (action.type) {
@@ -42,27 +22,58 @@ const countReducer = (counter, action) => {
   }
 }
 
-const initialState = [
-  {
-    task: 'create multiple reducers',
-    id: 465498491255,
-    completed: false
-  },
-]
-
 const initialCount = {
   count: 0
 };
 
-function App() {
-  const [task, setDispatch] = useReducer(todoReducer, initialState)
-  const [counter, dispatch] = useReducer(countReducer, initialCount)
 
-  const [item, setItem] = useState('')
+const todoReducer = (task, action) => {
+  switch (action.type) {
+    case ACTIONS.ADD_TASK:
+      return [
+        ...task,
+        {
+          task: action.payload.task,
+          id: Date.now(),
+          completed: false
+        }
+      ];
+
+    case ACTIONS.TOGGLE_COMPLETED:
+      return action.payload
+
+    case ACTIONS.CLEAR_COMPLETED:
+      return action.payload
+
+    default:
+      return task
+  }
+}
+
+const initialTaskList = [
+  {
+    task: 'create reducer for todo list',
+    id: 565468452131,
+    completed: false
+  }
+]
+
+function App() {
+  const [task, setDispatch] = useReducer(todoReducer, initialTaskList);
+  const [counter, dispatch] = useReducer(countReducer, initialCount);
+  const [item, setItem] = useState('');
 
   console.log(task)
 
-  const addTask = e => {
+  const increment = () => {
+    dispatch({ type: ACTIONS.INCREMENT })
+  }
+
+  const decrement = () => {
+    dispatch({ type: ACTIONS.DECREMENT })
+  }
+
+  const addTask = (e) => {
     e.preventDefault();
 
     setDispatch({
@@ -70,18 +81,20 @@ function App() {
       payload: {
         task: item
       }
-    });
+    })
     setItem('')
-
   }
 
-  const toggleCompleted = clickedItemId => {
+  const toggleCompleted = (clickedItemId) => {
     setDispatch({
       type: ACTIONS.TOGGLE_COMPLETED,
       payload: 
-        task.map(item => {
+        task.map((item) => {
           if (item.id === clickedItemId) {
-            return { ...item, completed: !item.completed}
+            return {
+              ...item, 
+              completed: !item.completed
+            }
           } else {
             return item
           }
@@ -92,42 +105,38 @@ function App() {
   const clearCompleted = () => {
     setDispatch({
       type: ACTIONS.CLEAR_COMPLETED,
-      payload:
+      payload: 
         task.filter(item => item.completed !== true)
     })
-  }
-
-  const increment = () => {
-    dispatch({ type: ACTIONS.INCREMENT })
-  }
-
-  const decrement = () => {
-    dispatch({ type: ACTIONS.DECREMENT })
   }
 
   return (
     <div className="App">
       <header className="App-header">
         <form>
-          <input type="text" className="todoInput" placeholder="add task" value={item} onChange={e => setItem (e.target.value)} />
-          <button onClick={addTask}>submit</button>
+          <input 
+            type="text" 
+            value={item}
+            placeholder='add task'
+            onChange={(e) => setItem(e.target.value)}
+          />
+          <button onClick={addTask} >submit</button>
         </form>
 
         <div>
-          {task.map(item => (
-            <p
-              key={item.id} 
-              onClick={() => toggleCompleted(item.id)} 
+          {task.map((item) => 
+            <p 
+              key={item.id}
+              onClick={() => toggleCompleted(item.id)}
               className={`item${item.completed ? ' completed' : ''}`}
-              aria-label="select task" 
             >
               {item.task}
             </p>
-          ))}
+          )}
         </div>
 
         <div>
-          <button onClick={clearCompleted}>erase completed</button>
+          <button onClick={clearCompleted} >erase completed</button>
         </div>
 
         <div>
