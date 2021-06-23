@@ -28,3 +28,7 @@
 .item.completed {
   text-decoration: line-through darkred;
 }
+
+.status {
+  color: white
+}

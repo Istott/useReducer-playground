@@ -1,4 +1,4 @@
-import React, {useState, useReducer} from 'react';
+import React, {useState, useReducer, useEffect} from 'react';
 import './App.css';
 
 const ACTIONS = {
@@ -6,7 +6,8 @@ const ACTIONS = {
   DECREMENT: 'decrement',
   ADD_TASK: 'add_task',
   TOGGLE_COMPLETED: 'toggle_completed',
-  CLEAR_COMPLETED: 'clear_completed'
+  CLEAR_COMPLETED: 'clear_completed',
+  STATUS: 'status',
 }
 
 
@@ -14,16 +15,28 @@ const ACTIONS = {
 const countReducer = (counter, action) => {
   switch (action.type) {
     case ACTIONS.INCREMENT:
-      return { count: counter.count + 1 }
+      return action.payload
     case ACTIONS.DECREMENT:
       return { count: counter.count - 1 }
+    case ACTIONS.STATUS:
+      if(counter.count > 1) { 
+        return { 
+          ...counter, 
+          message: 'winning'
+        }
+      } else if (counter.count < 0) {
+        return { ...counter, message: 'losing'}
+      } else {
+        return { ...counter, message: 'status pending'}
+      }
     default:
       return counter
   }
 }
 
 const initialCount = {
-  count: 0
+  count: 0,
+  message: 'status pending'
 };
 
 
@@ -62,16 +75,30 @@ function App() {
   const [task, setDispatch] = useReducer(todoReducer, initialTaskList);
   const [counter, dispatch] = useReducer(countReducer, initialCount);
   const [item, setItem] = useState('');
+  // const [status, setStatus] = useState('')
 
   console.log(task)
 
+  useEffect(() => {
+    dispatch({
+      type: ACTIONS.STATUS
+    })
+  }, [counter.count]);
+
   const increment = () => {
-    dispatch({ type: ACTIONS.INCREMENT })
+    dispatch({ 
+      type: ACTIONS.INCREMENT,
+      payload: {
+        count: counter.count + 1
+      }
+    })
   }
 
   const decrement = () => {
-    dispatch({ type: ACTIONS.DECREMENT })
+    dispatch({ 
+      type: ACTIONS.DECREMENT })
   }
+
 
   const addTask = (e) => {
     e.preventDefault();
@@ -143,6 +170,9 @@ function App() {
           <button onClick={increment}>like</button>
           <span>{counter.count}</span>
           <button onClick={decrement} >dislike</button>
+        </div>
+        <div className="status">
+          <p>{counter.message}</p>
         </div>
       </header>
     </div>
