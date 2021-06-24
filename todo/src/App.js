@@ -1,4 +1,4 @@
-import React, {useState, useReducer, useEffect} from 'react';
+import React, {useState, useReducer, useLayoutEffect} from 'react';
 import './App.css';
 
 const ACTIONS = {
@@ -44,23 +44,23 @@ const todoReducer = (task, action) => {
   switch (action.type) {
     case ACTIONS.ADD_TASK:
       return [
-        ...task,
-        {
-          task: action.payload.task,
-          id: Date.now(),
-          completed: false
-        }
-      ];
-
+        ...task, 
+      {
+        task: action.payload.task,
+        id: Date.now(), 
+        completed: false
+      }
+    ]
     case ACTIONS.TOGGLE_COMPLETED:
       return action.payload
 
     case ACTIONS.CLEAR_COMPLETED:
       return action.payload
-
-    default:
+      
+    default: 
       return task
   }
+
 }
 
 const initialTaskList = [
@@ -79,11 +79,12 @@ function App() {
 
   console.log(task)
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     dispatch({
       type: ACTIONS.STATUS
     })
   }, [counter.count]);
+
 
   const increment = () => {
     dispatch({ 
@@ -119,22 +120,25 @@ function App() {
         task.map((item) => {
           if (item.id === clickedItemId) {
             return {
-              ...item, 
+              ...item,
               completed: !item.completed
             }
           } else {
             return item
           }
         })
+      
     })
+
   }
 
   const clearCompleted = () => {
     setDispatch({
       type: ACTIONS.CLEAR_COMPLETED,
-      payload: 
-        task.filter(item => item.completed !== true)
+      payload:
+        task.filter((item) => item.completed !== true)
     })
+
   }
 
   return (
@@ -143,23 +147,28 @@ function App() {
         <form>
           <input 
             type="text" 
+            placeholder="add task"
             value={item}
-            placeholder='add task'
             onChange={(e) => setItem(e.target.value)}
           />
           <button onClick={addTask} >submit</button>
         </form>
 
         <div>
-          {task.map((item) => 
-            <p 
-              key={item.id}
-              onClick={() => toggleCompleted(item.id)}
-              className={`item${item.completed ? ' completed' : ''}`}
-            >
-              {item.task}
-            </p>
-          )}
+          {
+            task.map(item => {
+              return (
+                <p 
+                  key={item.id} 
+                  onClick={() => toggleCompleted(item.id)} 
+                  className={`item${item.completed === true ? ' completed' : ''}`} 
+                >
+                  {item.task}
+                </p>
+              )
+            })
+          }
+
         </div>
 
         <div>
