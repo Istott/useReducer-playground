@@ -1,0 +1,38 @@
+.App {
+  text-align: center;
+}
+
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+
+.item {
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background-color: inherit;
+  color: white;
+  font-size: .8em;
+}
+
+.item:hover {
+  transform: scale(1.1);
+  transition:all .3s;
+}
+
+.item.completed {
+  text-decoration: line-through darkred;
+}
+
+.status {
+  color: white
+}
