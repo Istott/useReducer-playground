@@ -18,6 +18,10 @@
 .item {
   text-decoration: none;
   cursor: pointer;
+  border: none;
+  background-color: inherit;
+  color: white;
+  font-size: .8em;
 }
 
 .item:hover {

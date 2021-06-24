@@ -8,9 +8,8 @@ const ACTIONS = {
   TOGGLE_COMPLETED: 'toggle_completed',
   CLEAR_COMPLETED: 'clear_completed',
   STATUS: 'status',
+  ACTIONS: 'reset',
 }
-
-
 
 const countReducer = (counter, action) => {
   switch (action.type) {
@@ -29,6 +28,8 @@ const countReducer = (counter, action) => {
       } else {
         return { ...counter, message: 'status pending'}
       }
+    case ACTIONS.RESET:
+      return { ...counter, count: 0}
     default:
       return counter
   }
@@ -56,7 +57,7 @@ const todoReducer = (task, action) => {
 
     case ACTIONS.CLEAR_COMPLETED:
       return action.payload
-      
+
     default: 
       return task
   }
@@ -75,7 +76,6 @@ function App() {
   const [task, setDispatch] = useReducer(todoReducer, initialTaskList);
   const [counter, dispatch] = useReducer(countReducer, initialCount);
   const [item, setItem] = useState('');
-  // const [status, setStatus] = useState('')
 
   console.log(task)
 
@@ -98,6 +98,12 @@ function App() {
   const decrement = () => {
     dispatch({ 
       type: ACTIONS.DECREMENT })
+  }
+
+  const reset = () => {
+    dispatch({
+      type: ACTIONS.RESET
+    })
   }
 
 
@@ -154,32 +160,32 @@ function App() {
           <button onClick={addTask} >submit</button>
         </form>
 
-        <div>
-          {
-            task.map(item => {
-              return (
-                <p 
-                  key={item.id} 
-                  onClick={() => toggleCompleted(item.id)} 
-                  className={`item${item.completed === true ? ' completed' : ''}`} 
-                >
-                  {item.task}
-                </p>
-              )
-            })
-          }
-
-        </div>
+        {
+          task.map(item => {
+            return (
+              <>
+              <button 
+                key={item.id} 
+                onClick={() => toggleCompleted(item.id)} 
+                className={`item${item.completed === true ? ' completed' : ''}`} 
+              >
+                {item.task}
+              </button>
+              </>
+            )
+          })
+        }
 
         <div>
           <button onClick={clearCompleted} >erase completed</button>
         </div>
 
         <div>
-          <button onClick={increment}>like</button>
+          <button onClick={increment}>+</button>
           <span>{counter.count}</span>
-          <button onClick={decrement} >dislike</button>
+          <button onClick={decrement} >-</button>
         </div>
+        <div><button onClick={reset} >reset</button></div>
         <div className="status">
           <p>{counter.message}</p>
         </div>
