@@ -1,4 +1,4 @@
-import React, {useState, useReducer, useLayoutEffect} from 'react';
+import React, {useState, useReducer, useLayoutEffect, useEffect} from 'react';
 import './App.css';
 
 const ACTIONS = {
@@ -72,12 +72,27 @@ const initialTaskList = [
   }
 ]
 
+const palette = ['#FFBA08', '#FAA307', '#F48C06', '#E85D04', '#DC2F02', '#D00000', '#9D0208', '#6A040F', '#370617', '#03071E']
+
 function App() {
   const [task, setDispatch] = useReducer(todoReducer, initialTaskList);
   const [counter, dispatch] = useReducer(countReducer, initialCount);
   const [item, setItem] = useState('');
+  const [color, setColor] = useState(palette);
+  let x = 0;
 
-  console.log(task)
+ const colorFunc= () => {
+    if (x >= color.length) {
+      x = 0
+      return x
+    } else if ( x > 0) {
+      x = x++
+      return x
+    } else {
+      x = x++
+      return x
+    }  
+  }
 
   useLayoutEffect(() => {
     dispatch({
@@ -162,12 +177,16 @@ function App() {
 
         {
           task.map(item => {
+            x = x + 1
+            colorFunc()
+            
             return (
               <>
               <button 
                 key={item.id} 
                 onClick={() => toggleCompleted(item.id)} 
                 className={`item${item.completed === true ? ' completed' : ''}`} 
+                style={{color: `${color[x]}`}}
               >
                 {item.task}
               </button>
