@@ -82,16 +82,12 @@ function App() {
   let x = 0;
 
  const colorFunc= () => {
-    if (x >= color.length) {
+    x = x + 1
+
+    if (x > color.length - 1) {
       x = 0
       return x
-    } else if ( x > 0) {
-      x = x++
-      return x
-    } else {
-      x = x++
-      return x
-    }  
+    }
   }
 
   useLayoutEffect(() => {
@@ -177,7 +173,6 @@ function App() {
 
         {
           task.map(item => {
-            x = x + 1
             colorFunc()
             
             return (
