@@ -28,10 +28,10 @@ const TodoList = () => {
             return (
                 <>
                 <button 
-                key={item.id} 
-                onClick={() => toggleCompleted(item.id)} 
-                className={`item${item.completed === true ? ' completed' : ''}`} 
-                style={{color: `${color[x]}`}}
+                    key={item.id} 
+                    onClick={() => toggleCompleted(item.id)} 
+                    className={`item${item.completed === true ? ' completed' : ''}`} 
+                    style={{color: `${color[x]}`}}
                 >
                 {item.task}
                 </button>

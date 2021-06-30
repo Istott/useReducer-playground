@@ -33,6 +33,13 @@
   text-decoration: line-through darkred;
 }
 
+.counter {
+  background-color: gray;
+  border-radius: 5px;
+  padding: 2% 2% 0 2%;
+  margin: 1%;
+}
+
 .status {
   color: white
 }
