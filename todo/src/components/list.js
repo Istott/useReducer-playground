@@ -43,6 +43,9 @@ const TodoList = () => {
         <div>
             <button onClick={clearCompleted} >erase completed</button>
         </div>
+
+
+        <p>{task[0].task}</p>
         </>
     )
 }

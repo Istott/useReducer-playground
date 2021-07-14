@@ -68,7 +68,33 @@ const initialName = {
 function App() {
   const [counter, dispatch] = useReducer(countReducer, initialCount);
   const [name, nameDispatch] = useReducer(nameReducer, initialName);
-  const [ title, setTitle] = useState('')
+  const [ title, setTitle] = useState('');
+
+  const [ person, setPerson ] = useState({
+    wallet: 500,
+    phones: 0,
+    case: 0,
+    message: ''
+  });
+
+  const cheapPhone = 39.99;
+  const medPhone = 59.99;
+  const highPhone= 99.99;
+  const taxRate = .045;
+  const phoneCase = 9.99;
+
+  const buyPhone = (item) => {
+    console.log(person);
+    if (item < person.wallet) {
+      if (item < 10) {
+        setPerson({...person, wallet: person.wallet - (item + (item * taxRate)), case: person.case += 1})
+      } else {
+        setPerson({...person, wallet: person.wallet - (item + (item * taxRate)), phones: person.phones += 1})
+      }
+    } else {
+      setPerson({...person, message: 'sorry bro, you broke AF'})
+    }
+  }
 
   useLayoutEffect(() => {
     dispatch({
@@ -161,6 +187,15 @@ function App() {
         <p>fred {name.fred}</p>
         <p>bob {name.bob}</p>
         <p>jimmy {name.jimmy}</p>
+
+        <span>wallet: ${person.wallet.toFixed(2)}</span>
+        <span>bought phones: {person.phones}</span>
+        <span>bought cases: {person.case}</span>
+        <span>{person.message}</span>
+        <button onClick={() => buyPhone(cheapPhone)}>buy cheap phone</button>
+        <button onClick={() => buyPhone(medPhone)}>buy average phone</button>
+        <button onClick={() => buyPhone(highPhone)}>buy expensive phone</button>
+        <button onClick={() => buyPhone(phoneCase)}>buy phone case</button>
 
       </header>
     </div>
