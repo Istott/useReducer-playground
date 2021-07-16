@@ -23,20 +23,20 @@ const TodoList = () => {
         <>
         {
             task.map(item => {
-            colorFunc()
-            
-            return (
-                <>
-                <button 
-                    key={item.id} 
-                    onClick={() => toggleCompleted(item.id)} 
-                    className={`item${item.completed === true ? ' completed' : ''}`} 
-                    style={{color: `${color[x]}`}}
-                >
-                {item.task}
-                </button>
-                </>
-            )
+                colorFunc()
+                
+                return (
+                    <>
+                    <button 
+                        key={item.id} 
+                        onClick={() => toggleCompleted(item.id)} 
+                        className={`item${item.completed === true ? ' completed' : ''}`} 
+                        style={{color: `${color[x]}`}}
+                    >
+                    {item.task}
+                    </button>
+                    </>
+                )
             })
         }
 

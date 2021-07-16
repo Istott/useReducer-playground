@@ -70,6 +70,10 @@ function App() {
   const [name, nameDispatch] = useReducer(nameReducer, initialName);
   const [ title, setTitle] = useState('');
 
+  const [ticker, setTicker] = useState(5);
+  const [timer, setTimer] = useState(5);
+  const [isActive, setIsActive] = useState(false);
+
   const [ person, setPerson ] = useState({
     wallet: 500,
     phones: 0,
@@ -82,6 +86,36 @@ function App() {
   const highPhone= 99.99;
   const taxRate = .045;
   const phoneCase = 9.99;
+
+  // let startTimer = false;
+  console.log('ticker: ', ticker);
+  console.log('timer: ', timer);
+
+  const tikTok = () => {
+    setIsActive(!isActive);
+    let x = 0;
+
+    if(isActive === true) {
+      for(let i = timer; i >= 0; i--){
+        console.log(i);
+        (function(){
+          setTimeout(function timmy() {
+            setTicker(i);
+          }, x*1000);
+        })();
+        x += 1;
+      }
+      setIsActive(!isActive);
+    }
+  };
+
+  useEffect(() => {
+    if(ticker === 0){
+      setIsActive(!isActive);
+    };
+  }, [ticker]);
+
+
 
   const buyPhone = (item) => {
     console.log(person);
@@ -196,6 +230,19 @@ function App() {
         <button onClick={() => buyPhone(medPhone)}>buy average phone</button>
         <button onClick={() => buyPhone(highPhone)}>buy expensive phone</button>
         <button onClick={() => buyPhone(phoneCase)}>buy phone case</button>
+
+        <span>timer: {ticker}</span>
+
+        <select
+          onChange={(e) => (setTicker(e.target.value), setTimer(e.target.value))}
+        >
+          <option value='5'>5</option>
+          <option value='10'>10</option>
+          <option value='15'>15</option>
+          <option value='30'>30</option>
+        </select>
+        <button onClick={tikTok}>{!isActive ? 'start' : 'stop'}</button>
+        <button onClick={() => setTicker(timer)}>reset</button>
 
       </header>
     </div>
