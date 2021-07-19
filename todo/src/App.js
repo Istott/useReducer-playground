@@ -5,6 +5,7 @@ import TodoState from './context/state';
 
 import TodoInput from './components/input';
 import TodoList from './components/list';
+import LangSelect from './components/lang';
 
 const ACTIONS = {
   INCREMENT: 'increment',
@@ -193,6 +194,8 @@ function App() {
 
           <TodoList />
         </TodoState>
+
+        <LangSelect />
 
         <div className="counter">
           <div>

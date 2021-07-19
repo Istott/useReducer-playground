@@ -43,3 +43,9 @@
 .status {
   color: white
 }
+
+.languageSelector {
+  background-color: rgb(65, 65, 65);
+  border-radius: 5px;
+  padding: 2%;
+}
