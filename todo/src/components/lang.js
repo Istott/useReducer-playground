@@ -1,29 +1,33 @@
 import React, {useState} from 'react';
 
+const lang = {
+    english: {
+        name: 'English',
+        placeHolder: 'say something...',
+        location: 'The Saxon is from England and this is what he says: '
+    }, 
+    spanish: {
+        name: 'Spanish',
+        placeHolder: 'Di algo...',
+        location: 'The spainard is from Spain and this is what he says: '
+    }
+}
+
 function LangSelect(){
     const [langSelected, setLangSelected] = useState({
         name: '',
         placeHolder: '',
+        location: ''
     });
     const [message, setMessage] = useState('')
     const [submitted, setSubmitted] = useState('fds')
 
     const selectChanges = (e) => {
-        const lang = {
-            english: {
-                name: 'English',
-                placeHolder: 'say something...'
-            }, 
-            spanish: {
-                name: 'Spanish',
-                placeHolder: 'Di algo...'
-            }
-        }
-
         if (e.target.value === 'english') {
             setLangSelected({ ...langSelected,
                 name: lang.english.name,
                 placeHolder: lang.english.placeHolder,
+                location: lang.english.location
             })
             return;
         }
@@ -31,6 +35,7 @@ function LangSelect(){
         setLangSelected({ ...langSelected,
             name: lang.spanish.name,
             placeHolder: lang.spanish.placeHolder,
+            location: lang.spanish.location
         });
     }
 
@@ -62,7 +67,7 @@ function LangSelect(){
             />
             <button onClick={submitChanges}>submit</button>
 
-            <p>{submitted}</p>
+            <p>{langSelected.location}{submitted}</p>
 
         </div>
     )
