@@ -10,7 +10,7 @@ const TodoList = () => {
     let x = 0;
   
    const colorFunc= () => {
-      x = x + 1
+      x = x + 1;
   
       if (x > color.length - 1) {
         x = 0
