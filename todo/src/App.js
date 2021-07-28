@@ -1,194 +1,197 @@
 import React, {useState, useReducer, useLayoutEffect, useEffect} from 'react';
 import './App.css';
 
-import TodoState from './context/state';
+// import TodoState from './context/state';
 
-import TodoInput from './components/input';
-import TodoList from './components/list';
-import LangSelect from './components/lang';
+// import TodoInput from './components/input';
+// import TodoList from './components/list';
+// import LangSelect from './components/lang';
+import Curry from './components/curry';
 
-const ACTIONS = {
-  INCREMENT: 'increment',
-  DECREMENT: 'decrement',
-  STATUS: 'status',
-  ACTIONS: 'reset',
-  FRED: 'fred',
-  BOB: 'bob',
-  JIMMY: 'jimmy',
-}
+// const ACTIONS = {
+//   INCREMENT: 'increment',
+//   DECREMENT: 'decrement',
+//   STATUS: 'status',
+//   ACTIONS: 'reset',
+//   FRED: 'fred',
+//   BOB: 'bob',
+//   JIMMY: 'jimmy',
+// }
 
-const countReducer = (counter, action) => {
-  switch (action.type) {
-    case ACTIONS.INCREMENT:
-      return action.payload
-    case ACTIONS.DECREMENT:
-      return { count: counter.count - 1 }
-    case ACTIONS.STATUS:
-      if(counter.count > 1) { 
-        return { 
-          ...counter, 
-          message: 'winning'
-        }
-      } else if (counter.count < 0) {
-        return { ...counter, message: 'losing'}
-      } else {
-        return { ...counter, message: 'pending'}
-      }
-    case ACTIONS.RESET:
-      return { ...counter, count: 0}
-    default:
-      return counter
-  }
-}
+// const countReducer = (counter, action) => {
+//   switch (action.type) {
+//     case ACTIONS.INCREMENT:
+//       return action.payload
+//     case ACTIONS.DECREMENT:
+//       return { count: counter.count - 1 }
+//     case ACTIONS.STATUS:
+//       if(counter.count > 1) { 
+//         return { 
+//           ...counter, 
+//           message: 'winning'
+//         }
+//       } else if (counter.count < 0) {
+//         return { ...counter, message: 'losing'}
+//       } else {
+//         return { ...counter, message: 'pending'}
+//       }
+//     case ACTIONS.RESET:
+//       return { ...counter, count: 0}
+//     default:
+//       return counter
+//   }
+// }
 
-const initialCount = {
-  count: 0,
-  message: 'status pending'
-};
+// const initialCount = {
+//   count: 0,
+//   message: 'status pending'
+// };
 
-const nameReducer = (nameState, action) => {
+// const nameReducer = (nameState, action) => {
 
-  switch(action.type) {
-    case ACTIONS.FRED:
-      return {...nameState, fred: action.payload}
-    case ACTIONS.BOB:
-      return {...nameState, bob: action.payload}
-    case ACTIONS.JIMMY:
-      return {...nameState, jimmy: action.payload}
-    default:
-      return nameState
-  }
-}
+//   switch(action.type) {
+//     case ACTIONS.FRED:
+//       return {...nameState, fred: action.payload}
+//     case ACTIONS.BOB:
+//       return {...nameState, bob: action.payload}
+//     case ACTIONS.JIMMY:
+//       return {...nameState, jimmy: action.payload}
+//     default:
+//       return nameState
+//   }
+// }
 
-const initialName = {
-  fred: '',
-  bob: '',
-  jimmy: ''
-}
+// const initialName = {
+//   fred: '',
+//   bob: '',
+//   jimmy: ''
+// }
 
 function App() {
-  const [counter, dispatch] = useReducer(countReducer, initialCount);
-  const [name, nameDispatch] = useReducer(nameReducer, initialName);
-  const [ title, setTitle] = useState('');
+  // const [counter, dispatch] = useReducer(countReducer, initialCount);
+  // const [name, nameDispatch] = useReducer(nameReducer, initialName);
+  // const [ title, setTitle] = useState('');
 
-  const [ticker, setTicker] = useState(5);
-  const [timer, setTimer] = useState(5);
-  const [isActive, setIsActive] = useState(false);
+  // const [ticker, setTicker] = useState(5);
+  // const [timer, setTimer] = useState(5);
+  // const [isActive, setIsActive] = useState(false);
 
-  const [ person, setPerson ] = useState({
-    wallet: 500,
-    phones: 0,
-    case: 0,
-    message: ''
-  });
+  // const [ person, setPerson ] = useState({
+  //   wallet: 500,
+  //   phones: 0,
+  //   case: 0,
+  //   message: ''
+  // });
 
-  const cheapPhone = 39.99;
-  const medPhone = 59.99;
-  const highPhone= 99.99;
-  const taxRate = .045;
-  const phoneCase = 9.99;
+  // const cheapPhone = 39.99;
+  // const medPhone = 59.99;
+  // const highPhone= 99.99;
+  // const taxRate = .045;
+  // const phoneCase = 9.99;
 
   // let startTimer = false;
-  console.log('ticker: ', ticker);
-  console.log('timer: ', timer);
+  // console.log('ticker: ', ticker);
+  // console.log('timer: ', timer);
 
-  const tikTok = () => {
-    setIsActive(!isActive);
-    let x = 0;
+  // const tikTok = () => {
+  //   setIsActive(!isActive);
+  //   let x = 0;
 
-    if(isActive === true) {
-      for(let i = timer; i >= 0; i--){
-        console.log(i);
-        (function(){
-          setTimeout(function timmy() {
-            setTicker(i);
-          }, x*1000);
-        })();
-        x += 1;
-      }
-      setIsActive(!isActive);
-    }
-  };
+  //   if(isActive === true) {
+  //     for(let i = timer; i >= 0; i--){
+  //       console.log(i);
+  //       (function(){
+  //         setTimeout(function timmy() {
+  //           setTicker(i);
+  //         }, x*1000);
+  //       })();
+  //       x += 1;
+  //     }
+  //     setIsActive(!isActive);
+  //   }
+  // };
 
-  useEffect(() => {
-    if(ticker === 0){
-      setIsActive(!isActive);
-    };
-  }, [ticker]);
-
-
-
-  const buyPhone = (item) => {
-    console.log(person);
-    if (item < person.wallet) {
-      if (item < 10) {
-        setPerson({...person, wallet: person.wallet - (item + (item * taxRate)), case: person.case += 1})
-      } else {
-        setPerson({...person, wallet: person.wallet - (item + (item * taxRate)), phones: person.phones += 1})
-      }
-    } else {
-      setPerson({...person, message: 'sorry bro, you broke AF'})
-    }
-  }
-
-  useLayoutEffect(() => {
-    dispatch({
-      type: ACTIONS.STATUS
-    })
-  }, [counter.count]);
+  // useEffect(() => {
+  //   if(ticker === 0){
+  //     setIsActive(!isActive);
+  //   };
+  // }, [ticker]);
 
 
-  const increment = () => {
-    dispatch({ 
-      type: ACTIONS.INCREMENT,
-      payload: {
-        count: counter.count + 1
-      }
-    })
-  }
 
-  const decrement = () => {
-    dispatch({ 
-      type: ACTIONS.DECREMENT })
-  }
+  // const buyPhone = (item) => {
+  //   console.log(person);
+  //   if (item < person.wallet) {
+  //     if (item < 10) {
+  //       setPerson({...person, wallet: person.wallet - (item + (item * taxRate)), case: person.case += 1})
+  //     } else {
+  //       setPerson({...person, wallet: person.wallet - (item + (item * taxRate)), phones: person.phones += 1})
+  //     }
+  //   } else {
+  //     setPerson({...person, message: 'sorry bro, you broke AF'})
+  //   }
+  // }
 
-  const reset = () => {
-    dispatch({
-      type: ACTIONS.RESET
-    })
-  }
+  // useLayoutEffect(() => {
+  //   dispatch({
+  //     type: ACTIONS.STATUS
+  //   })
+  // }, [counter.count]);
 
-  const fredHandler = (e) => {
-    e.preventDefault()
 
-    nameDispatch({
-      type: ACTIONS.FRED,
-      payload: title
-    })
-    setTitle('')
-  }
-  const bobHandler = (e) => {
-    e.preventDefault()
+  // const increment = () => {
+  //   dispatch({ 
+  //     type: ACTIONS.INCREMENT,
+  //     payload: {
+  //       count: counter.count + 1
+  //     }
+  //   })
+  // }
 
-    nameDispatch({
-      type: ACTIONS.BOB,
-      payload: title
-    })
-    setTitle('')
-  }
-  const jimmyHandler = (e) => {
-    e.preventDefault()
+  // const decrement = () => {
+  //   dispatch({ 
+  //     type: ACTIONS.DECREMENT })
+  // }
 
-    nameDispatch({
-      type: ACTIONS.JIMMY,
-      payload: title
-    })
-    setTitle('')
-  }
+  // const reset = () => {
+  //   dispatch({
+  //     type: ACTIONS.RESET
+  //   })
+  // }
+
+  // const fredHandler = (e) => {
+  //   e.preventDefault()
+
+  //   nameDispatch({
+  //     type: ACTIONS.FRED,
+  //     payload: title
+  //   })
+  //   setTitle('')
+  // }
+  // const bobHandler = (e) => {
+  //   e.preventDefault()
+
+  //   nameDispatch({
+  //     type: ACTIONS.BOB,
+  //     payload: title
+  //   })
+  //   setTitle('')
+  // }
+  // const jimmyHandler = (e) => {
+  //   e.preventDefault()
+
+  //   nameDispatch({
+  //     type: ACTIONS.JIMMY,
+  //     payload: title
+  //   })
+  //   setTitle('')
+  // }
 
   return (
     <div className="App">
       <header className="App-header">
+        <Curry />
+{/* 
         <TodoState>
           <TodoInput />
 
@@ -245,7 +248,7 @@ function App() {
           <option value='30'>30</option>
         </select>
         <button onClick={tikTok}>{!isActive ? 'start' : 'stop'}</button>
-        <button onClick={() => setTicker(timer)}>reset</button>
+        <button onClick={() => setTicker(timer)}>reset</button> */}
 
       </header>
     </div>
